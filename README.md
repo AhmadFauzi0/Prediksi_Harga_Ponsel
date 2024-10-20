@@ -128,7 +128,7 @@ print(confusion_matrix(y_test, y_pred_rf))
   
 ![Confusion Matrix Rf](https://github.com/user-attachments/assets/68c06849-f6a7-4d51-ade6-2e1429c8c0a3)
 
-Berikut merupak hasil dari confusion matrix pada model Random Forest:
+Berikut merupakan hasil dari confusion matrix pada model Random Forest:
 
 ![Hasil CM Rf](https://github.com/user-attachments/assets/2186566e-5190-429b-95be-d7280b4e0c9c)
 
@@ -140,3 +140,29 @@ Berikut merupak hasil dari confusion matrix pada model Random Forest:
 >  * Pada label 3 terdapat 99 label yang diprediksi label 3, dan terdapat 13 yang diprediksi menjadi label 2, serta tidak ada prediksi yang berlabel 0 ataupun 1.
 > Dari confusion matrix tersebut dapat diketahui dataset memiliki akurasi yang cukup baik dengan penghitungan model menggunakan Random Forest.
 
+* Hyperparameter Model Random Forest dengan GridSearch
+
+Parameter yang digunakan untuk optimasi model random forest menggunakan GridSearch yaitu:
+
+  * 'n_estimators': [50, 100, 200]
+  * 'max_depth': [None, 10, 20, 30]
+  * 'min_samples_split': [2, 5, 10]
+
+Dari parameter diatas akan dicari nilai parameter terbaik menggunakan GridSearch untuk model klasifikasi random forest.
+
+* Model prediksi dengan algoritma Random Forest dengan Hyperparameter GridSearch:
+  ```
+  param_grid = {
+    'n_estimators': [50, 100, 200],
+    'max_depth': [None, 10, 20, 30],
+    'min_samples_split': [2, 5, 10]
+}
+
+grid_search = GridSearchCV(estimator=model_rf, param_grid=param_grid, cv=5)
+grid_search.fit(X_train_scaled, y_train)
+
+#Best parameters dan evaluasi ulang model
+print(grid_search.best_params_)
+y_pred_best_rf = grid_search.best_estimator_.predict(X_test_scaled)
+print(classification_report(y_test, y_pred_best_rf))
+```
