@@ -123,22 +123,10 @@ print(confusion_matrix(y_test, y_pred_rf))
 > * n_estimators = menunjukkan jumlah model Decision Tree yang digunakan pada Random Forest
 > * random_state = mengontrol random number generator yang digunakan. Parameter ini berupa bilangan integer dan nilainya bebas. Parameter ini bertujuan untuk memastikan bahwa hasil pembagian dataset konsisten dan memberikan data yang sama setiap kali model dijalankan. Jika tidak ditentukan, maka tiap kali melakukan split, kita akan mendapatkan data train dan tes berbeda. Hal ini berpengaruh terhadap akurasi model ML yang menjadi berbeda tiap kali di-run.
 
-* Confusion Matrix
+* Confusion Matrix model random forest.
   Confusion matrix atau matriks kebingungan adalah alat yang digunakan untuk menggambarkan kinerja model klasifikasi pada data uji yang sudah diketahui hasil sebenarnya. Confusion matrix merupakan cara kita mencatat poin benar dan poin salah tersebut. Di dalam matriks ini, kita tulis semua kemungkinan jawaban yang benar dan jawaban yang salah. Dari catatan ini, kita bisa mengetahui seberapa baik model kita dalam menebak kelereng dan apa yang perlu diperbaiki agar model kita makin pintar menebak. Dalam confusion matrix, ada 4 bagian yang penting untuk kita ketahui.
   
 ![Confusion Matrix Rf](https://github.com/user-attachments/assets/68c06849-f6a7-4d51-ade6-2e1429c8c0a3)
-
-Berikut merupakan hasil dari confusion matrix pada model Random Forest:
-
-![Hasil CM Rf](https://github.com/user-attachments/assets/2186566e-5190-429b-95be-d7280b4e0c9c)
-
-> Hasil confusion matrix diatas diketahui bahwa:
-
->  * Pada label 0 terdapat 101 label yang diprediksi label 0 dan terdapat 4 yang diprediksi menjadi label 1 serta tidak ada prediksi yang berlabel 2 ataupun 3.
->  * Pada label 1 terdapat 79 label yang diprediksi label 1 dan tedapat 6 yang diprediksi menjadi label 0 dan 2, serta tidak ada prediksi yang berlabel 3.
->  * Pada label 2 terdapat 75 label yang diprediksi label 2, dan terdapat 10 yang diprediksi menjadi label 1, serta terdapat 7 yang diprediksi menjadi label 3, untuk prediksi label 0 tidak ada.
->  * Pada label 3 terdapat 99 label yang diprediksi label 3, dan terdapat 13 yang diprediksi menjadi label 2, serta tidak ada prediksi yang berlabel 0 ataupun 1.
-> Dari confusion matrix tersebut dapat diketahui dataset memiliki akurasi yang cukup baik dengan penghitungan model menggunakan Random Forest.
 
 * Hyperparameter Model Random Forest dengan GridSearch
 
@@ -150,7 +138,7 @@ Parameter yang digunakan untuk optimasi model random forest menggunakan GridSear
 
 Dari parameter diatas akan dicari nilai parameter terbaik menggunakan GridSearch untuk model klasifikasi random forest.
 
-* Model prediksi dengan algoritma Random Forest dengan Hyperparameter GridSearch:
+* Model optimasi algoritma Random Forest dengan Hyperparameter GridSearch:
 ```
 param_grid = {
     'n_estimators': [50, 100, 200],
@@ -165,3 +153,111 @@ print(grid_search.best_params_)
 y_pred_best_rf = grid_search.best_estimator_.predict(X_test_scaled)
 print(classification_report(y_test, y_pred_best_rf))
 ```
+* Confusion Matrix model random forest dengan hyperparameter GridSearch:
+```
+#Melihat Confusion Matrix
+cm = confusion_matrix(y_test, y_pred_best_rf)
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+plt.title('Confusion Matrix')
+plt.xlabel('Predicted Labels')
+plt.ylabel('True Labels')
+plt.show()
+```
+
+* Model prediksi dengan algoritma Support Vektor Machine:
+```
+  # Inisialisasi model SVM
+model_svm = SVC(kernel='rbf', random_state=42)
+
+# Latih model
+model_svm.fit(X_train, y_train)
+```
+> Berikut merupakan penjelasan terhadap setiap parameter yang digunakan:
+
+> * kernel = Algoritma SVM menggunakan serangkaian fungsi matematika yang didefinisikan sebagai kernel. Fungsi kernel adalah mengambil data sebagai input dan mengubahnya ke dalam bentuk yang dibutuhkan. Algoritma SVM yang berbeda menggunakan berbagai jenis fungsi kernel. Fungsi-fungsi ini dapat memiliki tipe yang berbeda. Misalnya linear, nonlinier, polinomial, fungsi basis radial (RBF), dan sigmoid.
+> * random_state = mengontrol random number generator yang digunakan. Parameter ini berupa bilangan integer dan nilainya bebas. Parameter ini bertujuan untuk memastikan bahwa hasil pembagian dataset konsisten dan memberikan data yang sama setiap kali model dijalankan. Jika tidak ditentukan, maka tiap kali melakukan split, kita akan mendapatkan data train dan tes berbeda. Hal ini berpengaruh terhadap akurasi model ML yang menjadi berbeda tiap kali di-run.
+
+* Confusion Matrix model Support Vektor Machine (SVM):
+```
+#Confusion Matrix Model SVM
+cm = confusion_matrix(y_test, y_pred_svm)
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+plt.title('Confusion Matrix')
+plt.xlabel('Predicted Labels')
+plt.ylabel('True Labels')
+```
+
+* Model optimasi algoritma Support Vektor Machine (SVM) dengan Hyperparameter GridSearch:
+
+Parameter yang digunakan untuk optimasi model SVM menggunakan GridSearch yaitu:
+
+  * 'C': [0.1, 1, 10, 100]
+  * 'gamma': [1, 0.1, 0.01, 0.001]
+  * 'kernel': ['rbf', 'poly', 'sigmoid']
+
+dari parameter diatas akan dicari nilai parameter terbaik menggunakan GridSearch untuk model klasifikasi SVM.
+
+```
+# Tentukan parameter yang ingin di-tuning
+param_grid = {
+    'C': [0.1, 1, 10, 100],
+    'gamma': [1, 0.1, 0.01, 0.001],
+    'kernel': ['rbf', 'poly', 'sigmoid']
+}
+
+# Lakukan Grid Search dengan 5-fold cross-validation
+grid = GridSearchCV(model_svm, param_grid, refit=True, verbose=2, cv=5)
+grid.fit(X_train, y_train)
+
+# Cetak parameter terbaik yang ditemukan oleh GridSearchCV
+print("Best Hyperparameters:", grid.best_params_)
+
+# Prediksi dengan model terbaik
+y_pred_SVM = grid.predict(X_test)
+
+# Evaluasi hasil prediksi
+print(f"Akurasi: {accuracy_score(y_test, y_pred_SVM)}")
+print(classification_report(y_test, y_pred_SVM))
+```
+* Confusion Matrix model Support Vektor Machine (SVM) dengan Hyperparameter GridSearch:
+```
+#Confusion Matrix Hyperparameter SVM
+cm = confusion_matrix(y_test, y_pred_SVM)
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+plt.title('Confusion Matrix')
+plt.xlabel('Predicted Labels')
+plt.ylabel('True Labels')
+```
+## Evaluasi
+Untuk melihat hasil pelatihan dari masing-masing model klasifikasi dengan menggunakan akurasi pada nilai yang dihasilkan pada setiap model, nilai akurasi menggunakan library dari [sklearn](https://scikit-learn.org/dev/modules/generated/sklearn.metrics.accuracy_score.html). Selainmelihat nilai akurasi pada proyek ini melakukan visualisasi hasil pelatihan dengan confusion matrix. Berikut merupakan hasil akurasi pada setiap model:
+
+* Evaluasi Hasil Model Random Forest:
+
+![Akurasi RF](https://github.com/user-attachments/assets/e8c08739-c5b5-49d0-8980-d23ce916a524)
+
+> Dari hasil evaluasi diatas model random forest memiliki hasil akurasi sebesar 89%. hasil ini akan kita tingkatkan dengan optimasi menggunakan Hyperparameter GridSearch.
+
+* Berikut merupakan hasil dari confusion matrix pada model Random Forest:
+
+![Hasil CM Rf](https://github.com/user-attachments/assets/2186566e-5190-429b-95be-d7280b4e0c9c)
+
+> Hasil confusion matrix diatas diketahui bahwa:
+
+>  * Pada label 0 terdapat 101 label yang diprediksi label 0 dan terdapat 4 yang diprediksi menjadi label 1 serta tidak ada prediksi yang berlabel 2 ataupun 3.
+>  * Pada label 1 terdapat 79 label yang diprediksi label 1 dan tedapat 6 yang diprediksi menjadi label 0 dan 2, serta tidak ada prediksi yang berlabel 3.
+>  * Pada label 2 terdapat 75 label yang diprediksi label 2, dan terdapat 10 yang diprediksi menjadi label 1, serta terdapat 7 yang diprediksi menjadi label 3, untuk prediksi label 0 tidak ada.
+>  * Pada label 3 terdapat 99 label yang diprediksi label 3, dan terdapat 13 yang diprediksi menjadi label 2, serta tidak ada prediksi yang berlabel 0 ataupun 1.
+
+> Dari confusion matrix tersebut dapat diketahui dataset memiliki akurasi yang cukup baik dengan penghitungan model menggunakan Random Forest.
+
+* Evaluasi Hasil Model Random Forest dengan Hyperparameter GridSearch:
+
+![Akurasi RF_Tuning](https://github.com/user-attachments/assets/99b484a1-8774-427f-b16c-687a270a2661)
+
+> Hasil parameter terbaik dari Hyperparameter GridSearch yaitu:
+
+  > * 'max_depth': 20
+  > * 'min_samples_split': 5
+  > * 'n_estimators': 200
+
+> Dari hasil optimasi menggunakan Hyperparameter GridSearch dapat diketahui peningkatan dari hasil akurasi sebesar 3% yaitu dari 89% menjadi 91%. Peningkatan ini tejadi dari parameter terbaik yang dihasilkan.
