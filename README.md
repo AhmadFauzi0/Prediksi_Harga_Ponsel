@@ -152,11 +152,12 @@ Dari parameter diatas akan dicari nilai parameter terbaik menggunakan GridSearch
 
 * Model prediksi dengan algoritma Random Forest dengan Hyperparameter GridSearch:
 ```
-  param_grid = {
+param_grid = {
     'n_estimators': [50, 100, 200],
     'max_depth': [None, 10, 20, 30],
     'min_samples_split': [2, 5, 10]
   }
+
 grid_search = GridSearchCV(estimator=model_rf, param_grid=param_grid, cv=5)
 grid_search.fit(X_train_scaled, y_train)
 #Best parameters dan evaluasi ulang model
