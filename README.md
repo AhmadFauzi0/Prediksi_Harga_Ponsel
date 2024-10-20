@@ -54,4 +54,7 @@ Variabel pada Data Test:
 
 > Hampir sama dengan data train, namun tanpa variabel price_range dan tambahan kolom Id sebagai pengenal unik.
 
-! [Berikut informasi mengenai jumlah data ,tipe data dan informasi data hilang (missing value) yang terdapat pada dataset ini:] (https://github.com/AhmadFauzi0/Prediksi_Harga_Ponsel/blob/44982654fb77d4d7e87fb221bfd112661cd7f15e/img/info.png)
+Berikut informasi mengenai jumlah data ,tipe data dan informasi data hilang (missing value) yang terdapat pada dataset ini:
+
+![info](https://github.com/user-attachments/assets/015637ae-d8b0-4965-8e47-3afb2fbfd649)
+![Missing](https://github.com/user-attachments/assets/0d40b733-dec5-48d2-a71f-b00d14c9c9ad)
