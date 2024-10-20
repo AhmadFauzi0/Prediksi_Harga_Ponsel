@@ -57,4 +57,39 @@ Variabel pada Data Test:
 Berikut informasi mengenai jumlah data ,tipe data dan informasi data hilang (missing value) yang terdapat pada dataset ini:
 
 ![info](https://github.com/user-attachments/assets/015637ae-d8b0-4965-8e47-3afb2fbfd649)
+
 ![Missing](https://github.com/user-attachments/assets/0d40b733-dec5-48d2-a71f-b00d14c9c9ad)
+
+Dalam memudahkan proses analisis diperlukan beberapa visualisasi data, seperti:
+
+  * sns.boxplot, untuk mendeteksi adanya data yang berada di luar batas atas dan batas bawah data (outliers).
+
+![outlier](https://github.com/user-attachments/assets/4977c809-5305-44b8-9c92-6d4dd2c84923)
+
+  * count.plot, untuk menganalisa fitur battery_power.
+
+![battery_power](https://github.com/user-attachments/assets/8c710888-4c9b-4fef-a4ad-9019034e99f4)
+
+  * sns.catplot, untuk mempertimbangkan price_range dengan fitur fc.
+
+![price_fc](https://github.com/user-attachments/assets/129cac2a-1bce-492c-b09f-bc87d1deb008)
+
+  * sns.pairplot, untuk menunjukkan semua grafik fitur numerik.
+
+![grafik](https://github.com/user-attachments/assets/a207416a-339d-45f4-8033-5e940337624e)
+
+> NOTE: Kita belum dapat menarik kesimpulan, dikarenakan sebaran data yang masih acak(random)
+
+  * sns.heatmap, untuk menunjukkan matrik korelasi fitur numerik.
+
+![korelasi](https://github.com/user-attachments/assets/b8caf6b9-1337-4fed-b35b-856e0eeebb59)
+
+Berdasarkan hasil korelasi diatas dapat diketahui:
+
+  * Variabel yang memiliki korelasi paling kuat adalah battery_power dan ram hal ini sangat dapat dipahami karena kebutuhan akan battery dan sangat berpengaruh terhadap kinerja HP.
+  * Pada kolerasi diata terdapat variabel yang tidak memilki korelasi dengan price_range yaitu variabel n_cores, m_dep, dan clock_speed, sehingga saya akan melakukan drop atau penghapusan pada tiga variabel tersebut.
+
+Dengan visualisasi data yang telah dilakukan, diharapkan dapat memudahkan kita didalam proses analisa data.
+
+
+
