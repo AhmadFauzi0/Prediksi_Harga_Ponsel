@@ -261,3 +261,97 @@ Untuk melihat hasil pelatihan dari masing-masing model klasifikasi dengan menggu
   > * 'n_estimators': 200
 
 > Dari hasil optimasi menggunakan Hyperparameter GridSearch dapat diketahui peningkatan dari hasil akurasi sebesar 3% yaitu dari 89% menjadi 91%. Peningkatan ini tejadi dari parameter terbaik yang dihasilkan.
+
+* Berikut merupakan hasil dari confusion matrix pada model Random Forest dengan Hyperparameter GridSearch:
+
+![CM RF_Tuning](https://github.com/user-attachments/assets/d4dcd251-35e8-4cc3-96e8-e543a979031a)
+
+> Hasil confusion matrix diatas diketahui bahwa:
+
+> * Pada label 0 terdapat 101 label yang diprediksi label 0 dan terdapat 4 yang diprediksi menjadi label 1 serta tidak ada prediksi yang berlabel 2 ataupun 3.
+> * Pada label 1 terdapat 83 label yang diprediksi label 1 dan tedapat 4 yang diprediksi menjadi label 0 dan 2, serta tidak ada prediksi yang berlabel 3.
+> * Pada label 2 terdapat 77 label yang diprediksi label 2, dan terdapat 8 yang diprediksi menjadi label 1, serta terdapat 7 yang diprediksi menjadi label 3, untuk prediksi label 0 tidak ada.
+> * Pada label 3 terdapat 101 label yang diprediksi label 3, dan terdapat 11 yang diprediksi menjadi label 2, serta tidak ada prediksi yang berlabel 0 ataupun 1.
+
+> Dari confusion matrix tersebut dapat diketahui perbaikan nilai prediksi dari dataset dengan penghitungan model optimasi menggunakan Hyperparameter GridSearch.
+
+* Evaluasi Hasil Model Support Vektor Machine:
+
+![Akurasi SVM](https://github.com/user-attachments/assets/8a91ca7c-8a41-4920-88c3-587682bc9761)
+
+> Dari hasil evaluasi diatas model SVM memiliki hasil akurasi sebesar 96%. hasil yang cukup tinggi dan melebihi nilai akurasi dari model random forest. Selanjutnya hasil ini akan kita tingkatkan dengan optimasi yang sama sebelumnya yaitu menggunakan Hyperparameter GridSearch.
+
+* Berikut merupakan hasil dari confusion matrix pada model Support Vektor Machine:
+
+![CM SVM](https://github.com/user-attachments/assets/71614ca3-c1ba-4dd5-b9e0-2fa922088575)
+
+> Hasil confusion matrix diatas diketahui bahwa:
+
+> * Pada label 0 terdapat 103 label yang diprediksi label 0 dan terdapat 2 yang diprediksi menjadi label 1 serta tidak ada prediksi yang berlabel 2 ataupun 3.
+> * Pada label 1 terdapat 90 label yang diprediksi label 1 dan tedapat 1 yang diprediksi menjadi label 0, serta tidak ada prediksi yang berlabel 2 dan 3.
+> * Pada label 2 terdapat 87 label yang diprediksi label 2, dan terdapat 3 yang diprediksi menjadi label 1, serta terdapat 2 yang diprediksi menjadi label 3, untuk prediksi label 0 tidak ada.
+> * Pada label 3 terdapat 106 label yang diprediksi label 3, dan terdapat 6 yang diprediksi menjadi label 2, serta tidak ada prediksi yang berlabel 0 ataupun 1.
+
+> Dari confusion matrix tersebut dapat diketahui dataset memiliki akurasi prediksi yang cukup baik dengan penghitungan model menggunakan SVM.>
+
+* Evaluasi Hasil Model SVM dengan Hyperparameter GridSearch:
+
+![Akurasi SVM_Tuning](https://github.com/user-attachments/assets/644ede6c-7d3d-4446-b31f-feef2b47c8a3)
+
+> Hasil parameter terbaik dari Hyperparameter GridSearch yaitu:
+
+  > * 'C': 0.1
+  > * 'gamma': 1
+  > * 'kernel': 'poly'
+
+> Dari hasil optimasi menggunakan Hyperparameter GridSearch dapat diketahui peningkatan dari hasil akurasi sebesar 1% yaitu dari 96% menjadi 97%. Peningkatan ini tejadi dari parameter terbaik yang dihasilkan.
+
+* Berikut merupakan hasil dari confusion matrix pada model SVM dengan Hyperparameter GridSearch:
+
+![CM SVM_Tuning](https://github.com/user-attachments/assets/f3b17eae-2299-484b-b9b5-891cd6aca847)
+
+> Hasil confusion matrix diatas diketahui bahwa:
+
+> * Pada label 0 terdapat 103 label yang diprediksi label 0 dan terdapat 2 yang diprediksi menjadi label 1 serta tidak ada prediksi yang berlabel 2 ataupun 3.
+> * Pada label 1 terdapat 90 label yang diprediksi label 1 dan tedapat 1 yang diprediksi menjadi label 2, serta tidak ada prediksi yang berlabel 0 dan 3.
+> * Pada label 2 terdapat 88 label yang diprediksi label 2, dan terdapat 3 yang diprediksi menjadi label 1, serta terdapat 1 yang diprediksi menjadi label 3, untuk prediksi label 0 tidak ada.
+> * Pada label 3 terdapat 108 label yang diprediksi label 3, dan terdapat 4 yang diprediksi menjadi label 2, serta tidak ada prediksi yang berlabel 0 ataupun 1.
+
+Dari confusion matrix tersebut dapat diketahui perbaikan nilai prediksi dari dataset dengan penghitungan model optimasi menggunakan Hyperparameter GridSearch.
+
+* Membuat Plot metrik Akurasi dengan bar chart:
+
+![Perbandingan Model](https://github.com/user-attachments/assets/8ccaebae-4de2-4ae9-bda0-bd12ca124b6e)
+
+> Berdasarkan perbandingan diatas diketahui model SVM memiliki nilai akurasi tertinggi yaitu 97%, untuk model optimasi dengan hyperparameter GridSearch peningkatan nilai akurasi terbesar adalah model algoritma Random Forest dengan peningkatan 3%.
+
+* Pengujian model prediksi dengan model SVM menggunakan data test yang sudah disediakan dengan data tanpa ada variabel price_range:
+```
+#Buat model SVM
+model_prediksi = SVC(kernel='poly', C=0.1, gamma=1)
+
+#Latih model pada data latih
+model_prediksi.fit(X_train, y_train)
+
+#Lakukan prediksi pada data uji
+y_prediksi = model_prediksi.predict(df_test)
+
+#Buat DataFrame dari hasil prediksi
+predictions_df = pd.DataFrame(y_prediksi, columns=['price_range'])
+
+#Simpan prediksi ke file CSV
+predictions_df.to_csv('/content/drive/MyDrive/Machine Learning/Latihan Dicoding ML/svm_predictions.csv', index=False)
+print("Prediksi telah selesai dan disimpan dalam 'svm_predictions.csv'")
+```
+Hasil prediksi kemudian tersimpan dalam drive dengan file csv, berikut tabel hasil prediksi data test menggunakan model SVM:
+
+![Prediksi dataset](https://github.com/user-attachments/assets/29d68c34-0fd4-4121-be3b-8275304e7f98)
+
+## Kesimpulan
+
+Berdasarkan hasil pelatihan model dengan dua algoritma machine learning yaitu Random Forest dan Support Vektor Machine, masing-masing model mampu memprediksi diatas 85% dan mengalami peningkatan nilai akurasi saat dilakukan optimasi menggunakan Hyperparameter GridSearch, untuk akurasi tertinggi dihasilkan oleh model SVM dengan akurasi sebesar 96% sebelum optimasi dan 97% sesudah dilakukan optimasi, sementara untuk algoritma Random Forest memiliki nilai akurasi sebesar 89% dengan peningkatan yang cukup tinggi dibandingkan dengan SVM setelah dilakukan optimasi yaitu sebesar 3% dengan akurasi menjadi 91%. Dari hasil tersebut model algoritma Support Vektor Machine (SVM) lebih tepat dan baik untuk digunakan sebagai model klasifikasi pada dataset Mobile Price Kalsifikasi.
+
+## Penutup
+
+Demikian hasil dari laporan proyek machine learning, predicitive analytics dengan dataset Mobile Price Klasifikasi. Bilamana didalam penyampaian serta penjelasan yang kurang berkenaan, saya memohon maaf. Atas waktu dan perhatiannya, saya ucapkan Terima kasih telah membaca laporan ini. Semoga dapat memberi manfaat bagi kita semuanya.
+
