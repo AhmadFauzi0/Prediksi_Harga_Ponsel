@@ -51,6 +51,6 @@ Dalam tahapan Data Understanding, kita akan berfokus pada pemahaman mendalam ter
 | 21	| price_range	| Variabel target dengan nilai 0 (biaya rendah), 1 (biaya sedang), 2 (biaya tinggi), 3 (biaya sangat tinggi) |
 
 Variabel pada Data Test:
-```
-  * Hampir sama dengan data train, namun tanpa variabel price_range dan tambahan kolom Id sebagai pengenal unik.
-```
+
+> Hampir sama dengan data train, namun tanpa variabel price_range dan tambahan kolom Id sebagai pengenal unik.
+
