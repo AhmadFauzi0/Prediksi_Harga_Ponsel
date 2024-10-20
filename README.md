@@ -23,3 +23,34 @@ Agar hasil prediksi lebih optimal, model yang dihasilkan akan disempurnakan deng
   
   * GridSearch adalah metode yang memungkinkan kita untuk menguji kombinasi berbagai nilai hyperparameter dan memilih yang terbaik berdasarkan kinerja model. Dalam proyek ini, GridSearch akan menguji berbagai kombinasi parameter dan mengevaluasi model berdasarkan metrik seperti akurasi, precision, recall, dan F1-score. Dengan melakukan tuning yang tepat, model dapat dioptimalkan untuk memberikan hasil klasifikasi yang lebih baik dan akurat dalam memprediksi kisaran harga ponsel. Keunggulan Hyperparameter Tuning dengan GridSearch adalah dapat meningkatkan performa model, dengan menemukan kombinasi hyperparameter terbaik, model akan bekerja lebih optimal dan memberikan hasil klasifikasi yang lebih akurat. Serta keunngulan lainnya dapat mencegah overfitting, dengan pengaturan hyperparameter yang tepat, kita dapat menghindari overfitting dan memastikan bahwa model dapat bekerja dengan baik pada data baru.
 Setelah dilakukan optimasi, model yang terbaik akan dievaluasi menggunakan metrik seperti akurasi, precision, recall, dan F1-score, untuk memastikan bahwa prediksi kisaran harga yang dihasilkan dapat diimplementasikan secara efektif dalam pengambilan keputusan penetapan harga perusahaan Bob.
+## Data Understanding
+Dalam tahapan Data Understanding, kita akan berfokus pada pemahaman mendalam terhadap dataset yang digunakan untuk proyek klasifikasi kisaran harga ponsel. Data diambil dari [Kaggle](https://www.kaggle.com/) [Mobile Price Classification Dataset](https://www.kaggle.com/datasets/iabhishekofficial/mobile-price-classification), yang terdiri dari dua folder: data train dengan 2000 entri dan data test dengan 1000 entri. Dataset ini memuat berbagai fitur ponsel seperti kapasitas baterai, RAM, resolusi layar, dan banyak fitur lain yang akan digunakan untuk memprediksi variabel target, yaitu price_range, yang mewakili empat kategori harga. Tahap pertama adalah memuat data train dan test ke dalam lingkungan pemrograman untuk dianalisis lebih lanjut. Data train berisi 2000 observasi dengan 21 variabel, sedangkan data test memiliki 1000 observasi dengan 20 variabel (tanpa variabel target price_range). Berikut detail variabelnya:
+
+| No | Variabel	| Deskripsi |
+| -- | -------- | --------- |
+| 1	| battery_power	| Total energi yang dapat disimpan baterai dalam satu waktu diukur dalam mAh |
+| 2 |	blue | Memiliki bluetooth atau tidak (1: ya, 0: tidak) |
+| 3	| clock_speed |	Kecepatan mikroprosesor mengeksekusi instruksi (GHz) |
+| 4	| dual_sim	| Memiliki dukungan dual sim atau tidak (1: ya, 0: tidak) |
+| 5 |	fc	| Mega piksel Kamera Depan |
+| 6 |	four_g	| Memiliki 4G atau tidak (1: ya, 0: tidak) |
+| 7	| int_memory	| Memori Internal dalam Gigabyte |
+| 8	| m_dep |	Kedalaman Seluler dalam cm |
+| 9	| mobile_wt	| Berat ponsel dalam gram |
+| 10	| n_cores	| Jumlah inti prosesor |
+| 11	| pc	| Mega piksel Kamera Utama |
+| 12	| px_height	| Tinggi Resolusi Piksel |
+| 13 |	px_width |	Lebar Resolusi Piksel |
+| 14	| ram |	Memori Akses Acak dalam Mega Byte |
+| 15	| sc_h |	Tinggi Layar ponsel dalam cm |
+| 16 |	sc_w	| Lebar Layar ponsel dalam cm |
+| 17	| talk_time	| Waktu terlama yang dapat digunakan untuk satu kali pengisian daya baterai |
+| 18	| three_g	| Memiliki 3G atau tidak (1: ya, 0: tidak) |
+| 19	| touch_screen	| Memiliki layar sentuh atau tidak (1: ya, 0: tidak) |
+| 20	| wifi |	Memiliki wifi atau tidak (1: ya, 0: tidak) |
+| 21	| price_range	| Variabel target dengan nilai 0 (biaya rendah), 1 (biaya sedang), 2 (biaya tinggi), 3 (biaya sangat tinggi) |
+
+<details>
+Variabel pada Data Test:
+  * Hampir sama dengan data train, namun tanpa variabel price_range dan tambahan kolom Id sebagai pengenal unik.
+</details>
