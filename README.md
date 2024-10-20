@@ -119,7 +119,8 @@ print(classification_report(y_test, y_pred_rf))
 print(confusion_matrix(y_test, y_pred_rf))
 ```
 > Berikut merupakan penjelasan terhadap setiap parameter yang digunakan:
-> n_estimators = menunjukkan jumlah model Decision Tree yang digunakan pada Random Forest
-> random_state = mengontrol random number generator yang digunakan. Parameter ini berupa bilangan integer dan nilainya bebas. Parameter ini bertujuan untuk memastikan bahwa hasil pembagian dataset konsisten dan memberikan data yang sama setiap kali model dijalankan. Jika tidak ditentukan, maka tiap kali melakukan split, kita akan mendapatkan data train dan tes berbeda. Hal ini berpengaruh terhadap akurasi model ML yang menjadi berbeda tiap kali di-run.
+
+> * n_estimators = menunjukkan jumlah model Decision Tree yang digunakan pada Random Forest
+> * random_state = mengontrol random number generator yang digunakan. Parameter ini berupa bilangan integer dan nilainya bebas. Parameter ini bertujuan untuk memastikan bahwa hasil pembagian dataset konsisten dan memberikan data yang sama setiap kali model dijalankan. Jika tidak ditentukan, maka tiap kali melakukan split, kita akan mendapatkan data train dan tes berbeda. Hal ini berpengaruh terhadap akurasi model ML yang menjadi berbeda tiap kali di-run.
 
 
