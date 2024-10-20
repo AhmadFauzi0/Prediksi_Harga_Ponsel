@@ -171,6 +171,15 @@ model_svm = SVC(kernel='rbf', random_state=42)
 
 # Latih model
 model_svm.fit(X_train, y_train)
+
+# Prediksi data uji
+from sklearn.metrics import accuracy_score, classification_report
+
+y_pred_svm = model_svm.predict(X_test)
+
+# Evaluasi performa model
+print(f"Akurasi: {accuracy_score(y_test, y_pred_svm)}")
+print(classification_report(y_test, y_pred_svm))
 ```
 > Berikut merupakan penjelasan terhadap setiap parameter yang digunakan:
 
