@@ -54,3 +54,4 @@ Variabel pada Data Test:
 
 > Hampir sama dengan data train, namun tanpa variabel price_range dan tambahan kolom Id sebagai pengenal unik.
 
+Berikut informasi mengenai jumlah data ,tipe data dan informasi data hilang (missing value) yang terdapat pada dataset ini:
