@@ -123,4 +123,20 @@ print(confusion_matrix(y_test, y_pred_rf))
 > * n_estimators = menunjukkan jumlah model Decision Tree yang digunakan pada Random Forest
 > * random_state = mengontrol random number generator yang digunakan. Parameter ini berupa bilangan integer dan nilainya bebas. Parameter ini bertujuan untuk memastikan bahwa hasil pembagian dataset konsisten dan memberikan data yang sama setiap kali model dijalankan. Jika tidak ditentukan, maka tiap kali melakukan split, kita akan mendapatkan data train dan tes berbeda. Hal ini berpengaruh terhadap akurasi model ML yang menjadi berbeda tiap kali di-run.
 
+* Confusion Matrix
+  Confusion matrix atau matriks kebingungan adalah alat yang digunakan untuk menggambarkan kinerja model klasifikasi pada data uji yang sudah diketahui hasil sebenarnya. Confusion matrix merupakan cara kita mencatat poin benar dan poin salah tersebut. Di dalam matriks ini, kita tulis semua kemungkinan jawaban yang benar dan jawaban yang salah. Dari catatan ini, kita bisa mengetahui seberapa baik model kita dalam menebak kelereng dan apa yang perlu diperbaiki agar model kita makin pintar menebak. Dalam confusion matrix, ada 4 bagian yang penting untuk kita ketahui.
+  
+![Confusion Matrix Rf](https://github.com/user-attachments/assets/68c06849-f6a7-4d51-ade6-2e1429c8c0a3)
+
+Berikut merupak hasil dari confusion matrix pada model Random Forest:
+
+![Hasil CM Rf](https://github.com/user-attachments/assets/2186566e-5190-429b-95be-d7280b4e0c9c)
+
+> Hasil confusion matrix diatas diketahui bahwa:
+
+>  * Pada label 0 terdapat 101 label yang diprediksi label 0 dan terdapat 4 yang diprediksi menjadi label 1 serta tidak ada prediksi yang berlabel 2 ataupun 3.
+>  * Pada label 1 terdapat 79 label yang diprediksi label 1 dan tedapat 6 yang diprediksi menjadi label 0 dan 2, serta tidak ada prediksi yang berlabel 3.
+>  * Pada label 2 terdapat 75 label yang diprediksi label 2, dan terdapat 10 yang diprediksi menjadi label 1, serta terdapat 7 yang diprediksi menjadi label 3, untuk prediksi label 0 tidak ada.
+>  * Pada label 3 terdapat 99 label yang diprediksi label 3, dan terdapat 13 yang diprediksi menjadi label 2, serta tidak ada prediksi yang berlabel 0 ataupun 1.
+> Dari confusion matrix tersebut dapat diketahui dataset memiliki akurasi yang cukup baik dengan penghitungan model menggunakan Random Forest.
 
