@@ -93,7 +93,7 @@ Dengan visualisasi data yang telah dilakukan, diharapkan dapat memudahkan kita d
 
 ## Data Preparation
 Setelah proses data understanding dengan melakukan pengecekan missing value dan outlier pada data, dimana data tidak memiliki missing value dan outlier. Selanjutnya melakukan data preparation dengan dimulai dari:
-  * Berdasarkan hasil korelasi diatas dapat diketahui bahwa terdapat variabel yang tidak memiliki korelasi dengan variabel label yaitu:
+* Berdasarkan hasil korelasi diatas dapat diketahui bahwa terdapat variabel yang tidak memiliki korelasi dengan variabel label yaitu:
   * variabel n_cores, m_dep, dan clock_speed, sehingga saya akan melakukan drop atau penghapusan pada tiga variabel tersebut.
 ```
 #Menghapus fitur yang memiliki korelasi kecil yaitu fitur "n_cores, m_dep, dan clock_speed"
