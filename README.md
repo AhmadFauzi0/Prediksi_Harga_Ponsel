@@ -91,5 +91,27 @@ Berdasarkan hasil korelasi diatas dapat diketahui:
 
 Dengan visualisasi data yang telah dilakukan, diharapkan dapat memudahkan kita didalam proses analisa data.
 
+## Data Preparation
+Setelah proses data understanding dengan melakukan pengecekan missing value dan outlier pada data, dimana data tidak memiliki missing value dan outlier. Selanjutnya melakukan data preparation dengan dimulai dari:
+  * Train Test Split : Membagi dataset menjadi data latih (train) dan data uji (test) merupakan hal yang harus kita lakukan sebelum membuat model.
+  * Data Transform
+    * Scaling: 
+      * Scaling Data Train (Standarisasi) : Algoritma machine learning memiliki performa lebih baik dan konvergen lebih cepat ketika dimodelkan pada data dengan skala relatif sama atau mendekati distribusi normal. Proses         standarisasi dapat membantu untuk membuat fitur data menjadi bentuk yang lebih mudah diolah oleh algoritma.
+      * Scaling Data Test : kita perlu melakukan proses scaling fitur numerik pada data test/uji. Hal ini harus dilakukan agar skala antara data train dan data test sama dan kita bisa melakukan evaluasi.
+
+## Modeling
+Terdapat beberapa algoritma yang dapat diterapkan pada kasus klasifikasi. Mengevaluasi performa masing-masing algoritma dan menentukan algoritma mana yang memberikan hasil prediksi terbaik adalah cara yang dapat kita lakukan sebagai solusi utama. Ketiga algoritma yang digunakan, antara lain:
+  1.	Random Forest
+  2.	Support Vektor Machine
+  3.	Hyperparameter GridSearch
+
+* Model prediksi dengan algoritma Random Forest:
+```
+#Inisialisasi model
+model_rf = RandomForestClassifier(n_estimators=100, random_state=42)
+#Latih model dengan data latih
+model_rf.fit(X_train_scaled, y_train)
+```
+
 
 
