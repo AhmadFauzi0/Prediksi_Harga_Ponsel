@@ -57,5 +57,5 @@ Variabel pada Data Test:
 Berikut informasi mengenai jumlah data ,tipe data dan informasi data hilang (missing value) yang terdapat pada dataset ini:
 
 <picture>
-img/info.png
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/AhmadFauzi0/Prediksi_Harga_Ponsel/blob/44982654fb77d4d7e87fb221bfd112661cd7f15e/img/info.png">
 </picture>
