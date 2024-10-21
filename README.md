@@ -19,15 +19,7 @@ Tujuan utama dari proyek ini adalah membantu perusahaan mengembangkan sistem yan
 * Untuk menyelesaikan masalah ini, akan digunakan pendekatan machine learning berbasis klasifikasi dengan dua algoritma utama: Random Forest dan Support Vector Machine (SVM). Algoritma ini akan digunakan untuk memprediksi kisaran harga berdasarkan data fitur ponsel seperti RAM, ukuran layar, kapasitas baterai, dan memori internal.
 Agar hasil prediksi lebih optimal.
 * Model yang dihasilkan akan disempurnakan dengan menggunakan GridSearch untuk Hyperparameter Tuning. Optimasi hyperparameter ini akan membantu dalam menemukan kombinasi parameter yang paling optimal untuk meningkatkan performa model.
-  
-  * Random Forest adalah algoritma ensemble learning yang menggabungkan prediksi dari banyak decision tree untuk meningkatkan akurasi dan stabilitas model. Dalam konteks proyek ini, Random Forest akan membantu dalam menentukan kisaran harga berdasarkan fitur-fitur seperti RAM, ukuran layar, dan kapasitas baterai. Setiap decision tree dalam Random Forest dibangun berdasarkan subset acak dari data dan subset acak dari fitur, yang membuat model ini tahan terhadap overfitting, terutama ketika data memiliki banyak fitur yang saling berkorelasi. Keunggulan Random Forest adalah kemampuan generalisasi yang baik dengan menggabungkan hasil dari banyak decision tree, Random Forest mampu menghasilkan prediksi yang lebih akurat dan mengurangi risiko overfitting. Kemudian dalam pemilihan fitur model ini dapat menangani sejumlah besar fitur dan secara otomatis memberikan peringkat fitur mana yang paling berkontribusi terhadap prediksi, sehingga dapat mengidentifikasi fitur ponsel yang paling penting dalam menentukan kisaran harga.
-  
-  * Support Vector Machine (SVM) adalah algoritma yang bekerja dengan menemukan hyperplane terbaik yang memisahkan kelas-kelas data. Dalam proyek ini, SVM akan digunakan untuk memetakan data fitur ponsel ke dalam ruang berdimensi tinggi, kemudian menemukan garis atau kurva (hyperplane) yang memisahkan ponsel berdasarkan kisaran harga. SVM sangat efektif ketika ada perbedaan yang jelas antara kategori harga, dan algoritma ini mampu bekerja dengan baik bahkan ketika data tidak linear, melalui penggunaan kernel trick. Keunggulan SVM yaitu memiliki keakuratan pada data yang tidak seimbang SVM mampu memberikan hasil klasifikasi yang baik, bahkan dalam kasus di mana data tidak seimbang atau memiliki sedikit kesalahan klasifikasi. Serta keunggulan lainnya yaitu dalam penggunaan kernel trick dimana SVM dapat menangani data yang tidak linear dan membuat model lebih fleksibel untuk berbagai macam distribusi data fitur ponsel.
-  
-  * Hyperparameter tuning dapat digunakan untuk memastikan performa terbaik dari model yang diterapkan, kita akan menggunakan Hyperparameter Tuning dengan GridSearch. Baik Random Forest maupun SVM memiliki hyperparameter yang dapat mempengaruhi performa model secara signifikan. Misalnya, pada Random Forest, jumlah tree (n_estimators) atau kedalaman maksimum tree (max_depth) perlu dioptimalkan, sedangkan pada SVM, parameter seperti C (regularization) dan kernel (linear, polynomial, atau RBF) harus disesuaikan.
-  
-  * GridSearch adalah metode yang memungkinkan kita untuk menguji kombinasi berbagai nilai hyperparameter dan memilih yang terbaik berdasarkan kinerja model. Dalam proyek ini, GridSearch akan menguji berbagai kombinasi parameter dan mengevaluasi model berdasarkan metrik seperti akurasi, precision, recall, dan F1-score. Dengan melakukan tuning yang tepat, model dapat dioptimalkan untuk memberikan hasil klasifikasi yang lebih baik dan akurat dalam memprediksi kisaran harga ponsel. Keunggulan Hyperparameter Tuning dengan GridSearch adalah dapat meningkatkan performa model, dengan menemukan kombinasi hyperparameter terbaik, model akan bekerja lebih optimal dan memberikan hasil klasifikasi yang lebih akurat. Serta keunngulan lainnya dapat mencegah overfitting, dengan pengaturan hyperparameter yang tepat, kita dapat menghindari overfitting dan memastikan bahwa model dapat bekerja dengan baik pada data baru.
-Setelah dilakukan optimasi, model yang terbaik akan dievaluasi menggunakan metrik seperti akurasi, precision, recall, dan F1-score, untuk memastikan bahwa prediksi kisaran harga yang dihasilkan dapat diimplementasikan secara efektif dalam pengambilan keputusan penetapan harga perusahaan Bob.
+
 ## Data Understanding
 Dalam tahapan Data Understanding, kita akan berfokus pada pemahaman mendalam terhadap dataset yang digunakan untuk proyek klasifikasi kisaran harga ponsel. Data diambil dari [Kaggle](https://www.kaggle.com/) [Mobile Price Classification Dataset](https://www.kaggle.com/datasets/iabhishekofficial/mobile-price-classification), yang terdiri dari dua folder: data train dengan 2000 entri dan data test dengan 1000 entri. Dataset ini memuat berbagai fitur ponsel seperti kapasitas baterai, RAM, resolusi layar, dan banyak fitur lain yang akan digunakan untuk memprediksi variabel target, yaitu price_range, yang mewakili empat kategori harga. Tahap pertama adalah memuat data train dan test ke dalam lingkungan pemrograman untuk dianalisis lebih lanjut. Data train berisi 2000 observasi dengan 21 variabel, sedangkan data test memiliki 1000 observasi dengan 20 variabel (tanpa variabel target price_range). Berikut detail variabelnya:
 
@@ -100,11 +92,6 @@ Dengan visualisasi data yang telah dilakukan, diharapkan dapat memudahkan kita d
 Setelah proses data understanding dengan melakukan pengecekan missing value dan outlier pada data, dimana data tidak memiliki missing value dan outlier. Selanjutnya melakukan data preparation dengan dimulai dari:
 * Berdasarkan hasil korelasi diatas dapat diketahui bahwa terdapat variabel yang tidak memiliki korelasi dengan variabel label yaitu:
   * variabel n_cores, m_dep, dan clock_speed, sehingga saya akan melakukan drop atau penghapusan pada tiga variabel tersebut.
-```
-#Menghapus fitur yang memiliki korelasi kecil yaitu fitur "n_cores, m_dep, dan clock_speed"
-df_train = df_train.drop(['n_cores', 'm_dep', 'clock_speed'], axis=1)
-df_train.head()
-```
 Setelah data sudah siap selanjutnya adalang dengan membagi data berikut langkahnya:
   * Train Test Split : Membagi dataset menjadi data latih (train) dan data uji (test) merupakan hal yang harus kita lakukan sebelum membuat model.
   * Data Transform
@@ -122,15 +109,10 @@ Terdapat beberapa algoritma yang dapat diterapkan pada kasus klasifikasi. Mengev
 ```
 #Inisialisasi model
 model_rf = RandomForestClassifier(n_estimators=100, random_state=42)
-#Latih model dengan data latih
 model_rf.fit(X_train_scaled, y_train)
-
-#Prediksi pada data uji
-y_pred_rf = model_rf.predict(X_test_scaled)
-#Evaluasi model
-print(classification_report(y_test, y_pred_rf))
-print(confusion_matrix(y_test, y_pred_rf))
 ```
+> Random Forest adalah algoritma ensemble learning yang menggabungkan prediksi dari banyak decision tree untuk meningkatkan akurasi dan stabilitas model. Dalam konteks proyek ini, Random Forest akan membantu dalam menentukan kisaran harga berdasarkan fitur-fitur seperti RAM, ukuran layar, dan kapasitas baterai. Setiap decision tree dalam Random Forest dibangun berdasarkan subset acak dari data dan subset acak dari fitur, yang membuat model ini tahan terhadap overfitting, terutama ketika data memiliki banyak fitur yang saling berkorelasi. Keunggulan Random Forest adalah kemampuan generalisasi yang baik dengan menggabungkan hasil dari banyak decision tree, Random Forest mampu menghasilkan prediksi yang lebih akurat dan mengurangi risiko overfitting. Kemudian dalam pemilihan fitur model ini dapat menangani sejumlah besar fitur dan secara otomatis memberikan peringkat fitur mana yang paling berkontribusi terhadap prediksi, sehingga dapat mengidentifikasi fitur ponsel yang paling penting dalam menentukan kisaran harga.
+  
 > Berikut merupakan penjelasan terhadap setiap parameter yang digunakan:
 
 > * n_estimators = menunjukkan jumlah model Decision Tree yang digunakan pada Random Forest
@@ -151,63 +133,25 @@ Parameter yang digunakan untuk optimasi model random forest menggunakan GridSear
 
 Dari parameter diatas akan dicari nilai parameter terbaik menggunakan GridSearch untuk model klasifikasi random forest.
 
-* Model optimasi algoritma Random Forest dengan Hyperparameter GridSearch:
-```
-param_grid = {
-    'n_estimators': [50, 100, 200],
-    'max_depth': [None, 10, 20, 30],
-    'min_samples_split': [2, 5, 10]
-  }
-
-grid_search = GridSearchCV(estimator=model_rf, param_grid=param_grid, cv=5)
-grid_search.fit(X_train_scaled, y_train)
-#Best parameters dan evaluasi ulang model
-print(grid_search.best_params_)
-y_pred_best_rf = grid_search.best_estimator_.predict(X_test_scaled)
-print(classification_report(y_test, y_pred_best_rf))
-```
-* Confusion Matrix model random forest dengan hyperparameter GridSearch:
-```
-#Melihat Confusion Matrix
-cm = confusion_matrix(y_test, y_pred_best_rf)
-sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
-plt.title('Confusion Matrix')
-plt.xlabel('Predicted Labels')
-plt.ylabel('True Labels')
-plt.show()
-```
-
+> Berikut penjelasan dari proses Hyperparamer Tuning dan GridSearch terhadap model:
+  > * Hyperparameter tuning dapat digunakan untuk memastikan performa terbaik dari model yang diterapkan, kita akan menggunakan Hyperparameter Tuning dengan GridSearch. Baik Random Forest maupun SVM memiliki hyperparameter yang dapat mempengaruhi performa model secara signifikan. Misalnya, pada Random Forest, jumlah tree (n_estimators) atau kedalaman maksimum tree (max_depth) perlu dioptimalkan, sedangkan pada SVM, parameter seperti C (regularization) dan kernel (linear, polynomial, atau RBF) harus disesuaikan.
+  > * GridSearch adalah metode yang memungkinkan kita untuk menguji kombinasi berbagai nilai hyperparameter dan memilih yang terbaik berdasarkan kinerja model. Dalam proyek ini, GridSearch akan menguji berbagai kombinasi parameter dan mengevaluasi model berdasarkan metrik seperti akurasi, precision, recall, dan F1-score. Dengan melakukan tuning yang tepat, model dapat dioptimalkan untuk memberikan hasil klasifikasi yang lebih baik dan akurat dalam memprediksi kisaran harga ponsel. Keunggulan Hyperparameter Tuning dengan GridSearch adalah dapat meningkatkan performa model, dengan menemukan kombinasi hyperparameter terbaik, model akan bekerja lebih optimal dan memberikan hasil klasifikasi yang lebih akurat. Serta keunngulan lainnya dapat mencegah overfitting, dengan pengaturan hyperparameter yang tepat, kita dapat menghindari overfitting dan memastikan bahwa model dapat bekerja dengan baik pada data baru.
+Setelah dilakukan optimasi, model yang terbaik akan dievaluasi menggunakan metrik seperti akurasi, precision, recall, dan F1-score, untuk memastikan bahwa prediksi kisaran harga yang dihasilkan dapat diimplementasikan secara efektif dalam pengambilan keputusan penetapan harga perusahaan.
 * Model prediksi dengan algoritma Support Vektor Machine:
 ```
-  # Inisialisasi model SVM
+# Inisialisasi model SVM
 model_svm = SVC(kernel='rbf', random_state=42)
-
-# Latih model
 model_svm.fit(X_train, y_train)
-
-# Prediksi data uji
-from sklearn.metrics import accuracy_score, classification_report
-
-y_pred_svm = model_svm.predict(X_test)
-
-# Evaluasi performa model
-print(f"Akurasi: {accuracy_score(y_test, y_pred_svm)}")
-print(classification_report(y_test, y_pred_svm))
 ```
+> Support Vector Machine (SVM) adalah algoritma yang bekerja dengan menemukan hyperplane terbaik yang memisahkan kelas-kelas data. Dalam proyek ini, SVM akan digunakan untuk memetakan data fitur ponsel ke dalam ruang berdimensi tinggi, kemudian menemukan garis atau kurva (hyperplane) yang memisahkan ponsel berdasarkan kisaran harga. SVM sangat efektif ketika ada perbedaan yang jelas antara kategori harga, dan algoritma ini mampu bekerja dengan baik bahkan ketika data tidak linear, melalui penggunaan kernel trick. Keunggulan SVM yaitu memiliki keakuratan pada data yang tidak seimbang SVM mampu memberikan hasil klasifikasi yang baik, bahkan dalam kasus di mana data tidak seimbang atau memiliki sedikit kesalahan klasifikasi. Serta keunggulan lainnya yaitu dalam penggunaan kernel trick dimana SVM dapat menangani data yang tidak linear dan membuat model lebih fleksibel untuk berbagai macam distribusi data fitur ponsel.
+  
 > Berikut merupakan penjelasan terhadap setiap parameter yang digunakan:
 
 > * kernel = Algoritma SVM menggunakan serangkaian fungsi matematika yang didefinisikan sebagai kernel. Fungsi kernel adalah mengambil data sebagai input dan mengubahnya ke dalam bentuk yang dibutuhkan. Algoritma SVM yang berbeda menggunakan berbagai jenis fungsi kernel. Fungsi-fungsi ini dapat memiliki tipe yang berbeda. Misalnya linear, nonlinier, polinomial, fungsi basis radial (RBF), dan sigmoid.
 > * random_state = mengontrol random number generator yang digunakan. Parameter ini berupa bilangan integer dan nilainya bebas. Parameter ini bertujuan untuk memastikan bahwa hasil pembagian dataset konsisten dan memberikan data yang sama setiap kali model dijalankan. Jika tidak ditentukan, maka tiap kali melakukan split, kita akan mendapatkan data train dan tes berbeda. Hal ini berpengaruh terhadap akurasi model ML yang menjadi berbeda tiap kali di-run.
 
 * Confusion Matrix model Support Vektor Machine (SVM):
-```
-#Confusion Matrix Model SVM
-cm = confusion_matrix(y_test, y_pred_svm)
-sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
-plt.title('Confusion Matrix')
-plt.xlabel('Predicted Labels')
-plt.ylabel('True Labels')
-```
+  > Confusion Matrix digunakan untuk melihat hasil prediksi dari model SVM
 
 * Model optimasi algoritma Support Vektor Machine (SVM) dengan Hyperparameter GridSearch:
 
@@ -218,38 +162,8 @@ Parameter yang digunakan untuk optimasi model SVM menggunakan GridSearch yaitu:
   * 'kernel': ['rbf', 'poly', 'sigmoid']
 
 dari parameter diatas akan dicari nilai parameter terbaik menggunakan GridSearch untuk model klasifikasi SVM.
+kemudian akan dilihat kembali confusion matrix setelah optimasi.
 
-```
-# Tentukan parameter yang ingin di-tuning
-param_grid = {
-    'C': [0.1, 1, 10, 100],
-    'gamma': [1, 0.1, 0.01, 0.001],
-    'kernel': ['rbf', 'poly', 'sigmoid']
-}
-
-# Lakukan Grid Search dengan 5-fold cross-validation
-grid = GridSearchCV(model_svm, param_grid, refit=True, verbose=2, cv=5)
-grid.fit(X_train, y_train)
-
-# Cetak parameter terbaik yang ditemukan oleh GridSearchCV
-print("Best Hyperparameters:", grid.best_params_)
-
-# Prediksi dengan model terbaik
-y_pred_SVM = grid.predict(X_test)
-
-# Evaluasi hasil prediksi
-print(f"Akurasi: {accuracy_score(y_test, y_pred_SVM)}")
-print(classification_report(y_test, y_pred_SVM))
-```
-* Confusion Matrix model Support Vektor Machine (SVM) dengan Hyperparameter GridSearch:
-```
-#Confusion Matrix Hyperparameter SVM
-cm = confusion_matrix(y_test, y_pred_SVM)
-sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
-plt.title('Confusion Matrix')
-plt.xlabel('Predicted Labels')
-plt.ylabel('True Labels')
-```
 ## Evaluasi
 Untuk melihat hasil pelatihan dari masing-masing model klasifikasi dengan menggunakan akurasi pada nilai yang dihasilkan pada setiap model, nilai akurasi menggunakan library dari [sklearn](https://scikit-learn.org/dev/modules/generated/sklearn.metrics.accuracy_score.html). Selainmelihat nilai akurasi pada proyek ini melakukan visualisasi hasil pelatihan dengan confusion matrix. Berikut merupakan hasil akurasi pada setiap model:
 
@@ -262,15 +176,6 @@ Untuk melihat hasil pelatihan dari masing-masing model klasifikasi dengan menggu
 * Berikut merupakan hasil dari confusion matrix pada model Random Forest:
 
 ![Hasil CM Rf](https://github.com/user-attachments/assets/2186566e-5190-429b-95be-d7280b4e0c9c)
-
-> Hasil confusion matrix diatas diketahui bahwa:
-
->  * Pada label 0 terdapat 101 label yang diprediksi label 0 dan terdapat 4 yang diprediksi menjadi label 1 serta tidak ada prediksi yang berlabel 2 ataupun 3.
->  * Pada label 1 terdapat 79 label yang diprediksi label 1 dan tedapat 6 yang diprediksi menjadi label 0 dan 2, serta tidak ada prediksi yang berlabel 3.
->  * Pada label 2 terdapat 75 label yang diprediksi label 2, dan terdapat 10 yang diprediksi menjadi label 1, serta terdapat 7 yang diprediksi menjadi label 3, untuk prediksi label 0 tidak ada.
->  * Pada label 3 terdapat 99 label yang diprediksi label 3, dan terdapat 13 yang diprediksi menjadi label 2, serta tidak ada prediksi yang berlabel 0 ataupun 1.
-
-> Dari confusion matrix tersebut dapat diketahui dataset memiliki akurasi yang cukup baik dengan penghitungan model menggunakan Random Forest.
 
 * Evaluasi Hasil Model Random Forest dengan Hyperparameter GridSearch:
 
@@ -288,33 +193,15 @@ Untuk melihat hasil pelatihan dari masing-masing model klasifikasi dengan menggu
 
 ![CM RF_Tuning](https://github.com/user-attachments/assets/d4dcd251-35e8-4cc3-96e8-e543a979031a)
 
-> Hasil confusion matrix diatas diketahui bahwa:
-
-> * Pada label 0 terdapat 101 label yang diprediksi label 0 dan terdapat 4 yang diprediksi menjadi label 1 serta tidak ada prediksi yang berlabel 2 ataupun 3.
-> * Pada label 1 terdapat 83 label yang diprediksi label 1 dan tedapat 4 yang diprediksi menjadi label 0 dan 2, serta tidak ada prediksi yang berlabel 3.
-> * Pada label 2 terdapat 77 label yang diprediksi label 2, dan terdapat 8 yang diprediksi menjadi label 1, serta terdapat 7 yang diprediksi menjadi label 3, untuk prediksi label 0 tidak ada.
-> * Pada label 3 terdapat 101 label yang diprediksi label 3, dan terdapat 11 yang diprediksi menjadi label 2, serta tidak ada prediksi yang berlabel 0 ataupun 1.
-
-> Dari confusion matrix tersebut dapat diketahui perbaikan nilai prediksi dari dataset dengan penghitungan model optimasi menggunakan Hyperparameter GridSearch.
-
 * Evaluasi Hasil Model Support Vektor Machine:
 
 ![Akurasi SVM](https://github.com/user-attachments/assets/8a91ca7c-8a41-4920-88c3-587682bc9761)
 
-> Dari hasil evaluasi diatas model SVM memiliki hasil akurasi sebesar 96%. hasil yang cukup tinggi dan melebihi nilai akurasi dari model random forest. Selanjutnya hasil ini akan kita tingkatkan dengan optimasi yang sama sebelumnya yaitu menggunakan Hyperparameter GridSearch.
 
 * Berikut merupakan hasil dari confusion matrix pada model Support Vektor Machine:
 
 ![CM SVM](https://github.com/user-attachments/assets/71614ca3-c1ba-4dd5-b9e0-2fa922088575)
 
-> Hasil confusion matrix diatas diketahui bahwa:
-
-> * Pada label 0 terdapat 103 label yang diprediksi label 0 dan terdapat 2 yang diprediksi menjadi label 1 serta tidak ada prediksi yang berlabel 2 ataupun 3.
-> * Pada label 1 terdapat 90 label yang diprediksi label 1 dan tedapat 1 yang diprediksi menjadi label 0, serta tidak ada prediksi yang berlabel 2 dan 3.
-> * Pada label 2 terdapat 87 label yang diprediksi label 2, dan terdapat 3 yang diprediksi menjadi label 1, serta terdapat 2 yang diprediksi menjadi label 3, untuk prediksi label 0 tidak ada.
-> * Pada label 3 terdapat 106 label yang diprediksi label 3, dan terdapat 6 yang diprediksi menjadi label 2, serta tidak ada prediksi yang berlabel 0 ataupun 1.
-
-> Dari confusion matrix tersebut dapat diketahui dataset memiliki akurasi prediksi yang cukup baik dengan penghitungan model menggunakan SVM.>
 
 * Evaluasi Hasil Model SVM dengan Hyperparameter GridSearch:
 
@@ -326,46 +213,15 @@ Untuk melihat hasil pelatihan dari masing-masing model klasifikasi dengan menggu
   > * 'gamma': 1
   > * 'kernel': 'poly'
 
-> Dari hasil optimasi menggunakan Hyperparameter GridSearch dapat diketahui peningkatan dari hasil akurasi sebesar 1% yaitu dari 96% menjadi 97%. Peningkatan ini tejadi dari parameter terbaik yang dihasilkan.
-
 * Berikut merupakan hasil dari confusion matrix pada model SVM dengan Hyperparameter GridSearch:
 
 ![CM SVM_Tuning](https://github.com/user-attachments/assets/f3b17eae-2299-484b-b9b5-891cd6aca847)
-
-> Hasil confusion matrix diatas diketahui bahwa:
-
-> * Pada label 0 terdapat 103 label yang diprediksi label 0 dan terdapat 2 yang diprediksi menjadi label 1 serta tidak ada prediksi yang berlabel 2 ataupun 3.
-> * Pada label 1 terdapat 90 label yang diprediksi label 1 dan tedapat 1 yang diprediksi menjadi label 2, serta tidak ada prediksi yang berlabel 0 dan 3.
-> * Pada label 2 terdapat 88 label yang diprediksi label 2, dan terdapat 3 yang diprediksi menjadi label 1, serta terdapat 1 yang diprediksi menjadi label 3, untuk prediksi label 0 tidak ada.
-> * Pada label 3 terdapat 108 label yang diprediksi label 3, dan terdapat 4 yang diprediksi menjadi label 2, serta tidak ada prediksi yang berlabel 0 ataupun 1.
-
-Dari confusion matrix tersebut dapat diketahui perbaikan nilai prediksi dari dataset dengan penghitungan model optimasi menggunakan Hyperparameter GridSearch.
 
 * Membuat Plot metrik Akurasi dengan bar chart:
 
 ![Perbandingan Model](https://github.com/user-attachments/assets/8ccaebae-4de2-4ae9-bda0-bd12ca124b6e)
 
-> Berdasarkan perbandingan diatas diketahui model SVM memiliki nilai akurasi tertinggi yaitu 97%, untuk model optimasi dengan hyperparameter GridSearch peningkatan nilai akurasi terbesar adalah model algoritma Random Forest dengan peningkatan 3%.
-
-* Pengujian model prediksi dengan model SVM menggunakan data test yang sudah disediakan dengan data tanpa ada variabel price_range:
-```
-#Buat model SVM
-model_prediksi = SVC(kernel='poly', C=0.1, gamma=1)
-
-#Latih model pada data latih
-model_prediksi.fit(X_train, y_train)
-
-#Lakukan prediksi pada data uji
-y_prediksi = model_prediksi.predict(df_test)
-
-#Buat DataFrame dari hasil prediksi
-predictions_df = pd.DataFrame(y_prediksi, columns=['price_range'])
-
-#Simpan prediksi ke file CSV
-predictions_df.to_csv('/content/drive/MyDrive/Machine Learning/Latihan Dicoding ML/svm_predictions.csv', index=False)
-print("Prediksi telah selesai dan disimpan dalam 'svm_predictions.csv'")
-```
-Hasil prediksi kemudian tersimpan dalam drive dengan file csv, berikut tabel hasil prediksi data test menggunakan model SVM:
+* Pengujian model prediksi dengan model SVM menggunakan data test yang sudah disediakan dengan data tanpa ada variabel price_range. Berikut hasil prediksi kemudian tersimpan dalam drive dengan file csv, berikut tabel hasil prediksi data test menggunakan model SVM:
 
 ![Prediksi dataset](https://github.com/user-attachments/assets/29d68c34-0fd4-4121-be3b-8275304e7f98)
 
