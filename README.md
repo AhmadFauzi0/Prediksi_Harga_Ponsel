@@ -182,8 +182,6 @@ Untuk melihat hasil pelatihan dari masing-masing model klasifikasi dengan menggu
 
 ![Akurasi RF](https://github.com/user-attachments/assets/e8c08739-c5b5-49d0-8980-d23ce916a524)
 
-> Dari hasil evaluasi diatas model random forest memiliki hasil akurasi sebesar 89%. hasil ini akan kita tingkatkan dengan optimasi menggunakan Hyperparameter GridSearch.
-
 * Berikut merupakan hasil dari confusion matrix pada model Random Forest:
 
 ![Hasil CM Rf](https://github.com/user-attachments/assets/2186566e-5190-429b-95be-d7280b4e0c9c)
