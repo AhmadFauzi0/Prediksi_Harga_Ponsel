@@ -132,6 +132,11 @@ Parameter yang digunakan untuk optimasi model random forest menggunakan GridSear
   * 'min_samples_split': [2, 5, 10]
 
 Dari parameter diatas akan dicari nilai parameter terbaik menggunakan GridSearch untuk model klasifikasi random forest.
+> Hasil parameter terbaik dari Hyperparameter GridSearch yaitu:
+
+  > * 'max_depth': 20
+  > * 'min_samples_split': 5
+  > * 'n_estimators': 200
 
 > Berikut penjelasan dari proses Hyperparamer Tuning dan GridSearch terhadap model:
   > * Hyperparameter tuning dapat digunakan untuk memastikan performa terbaik dari model yang diterapkan, kita akan menggunakan Hyperparameter Tuning dengan GridSearch. Baik Random Forest maupun SVM memiliki hyperparameter yang dapat mempengaruhi performa model secara signifikan. Misalnya, pada Random Forest, jumlah tree (n_estimators) atau kedalaman maksimum tree (max_depth) perlu dioptimalkan, sedangkan pada SVM, parameter seperti C (regularization) dan kernel (linear, polynomial, atau RBF) harus disesuaikan.
@@ -164,6 +169,12 @@ Parameter yang digunakan untuk optimasi model SVM menggunakan GridSearch yaitu:
 dari parameter diatas akan dicari nilai parameter terbaik menggunakan GridSearch untuk model klasifikasi SVM.
 kemudian akan dilihat kembali confusion matrix setelah optimasi.
 
+> Hasil parameter terbaik dari Hyperparameter GridSearch yaitu:
+
+  > * 'C': 0.1
+  > * 'gamma': 1
+  > * 'kernel': 'poly'
+
 ## Evaluasi
 Untuk melihat hasil pelatihan dari masing-masing model klasifikasi dengan menggunakan akurasi pada nilai yang dihasilkan pada setiap model, nilai akurasi menggunakan library dari [sklearn](https://scikit-learn.org/dev/modules/generated/sklearn.metrics.accuracy_score.html). Selainmelihat nilai akurasi pada proyek ini melakukan visualisasi hasil pelatihan dengan confusion matrix. Berikut merupakan hasil akurasi pada setiap model:
 
@@ -180,14 +191,6 @@ Untuk melihat hasil pelatihan dari masing-masing model klasifikasi dengan menggu
 * Evaluasi Hasil Model Random Forest dengan Hyperparameter GridSearch:
 
 ![Akurasi RF_Tuning](https://github.com/user-attachments/assets/99b484a1-8774-427f-b16c-687a270a2661)
-
-> Hasil parameter terbaik dari Hyperparameter GridSearch yaitu:
-
-  > * 'max_depth': 20
-  > * 'min_samples_split': 5
-  > * 'n_estimators': 200
-
-> Dari hasil optimasi menggunakan Hyperparameter GridSearch dapat diketahui peningkatan dari hasil akurasi sebesar 3% yaitu dari 89% menjadi 91%. Peningkatan ini tejadi dari parameter terbaik yang dihasilkan.
 
 * Berikut merupakan hasil dari confusion matrix pada model Random Forest dengan Hyperparameter GridSearch:
 
@@ -206,12 +209,6 @@ Untuk melihat hasil pelatihan dari masing-masing model klasifikasi dengan menggu
 * Evaluasi Hasil Model SVM dengan Hyperparameter GridSearch:
 
 ![Akurasi SVM_Tuning](https://github.com/user-attachments/assets/644ede6c-7d3d-4446-b31f-feef2b47c8a3)
-
-> Hasil parameter terbaik dari Hyperparameter GridSearch yaitu:
-
-  > * 'C': 0.1
-  > * 'gamma': 1
-  > * 'kernel': 'poly'
 
 * Berikut merupakan hasil dari confusion matrix pada model SVM dengan Hyperparameter GridSearch:
 
